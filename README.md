@@ -59,7 +59,7 @@ If you use this project in academic research, please cite:
 @misc{bisht2024hybridsat,
   author = {Akshat Bisht},
   title = {Hybrid SAT Solver with Shared Clause Learning},
-  year = {2024},
+  year = {2025},
   howpublished = {GitHub repository},
   note = {https://github.com/akshat4474/hybrid-sat-solver}
 }
