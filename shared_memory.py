@@ -120,5 +120,5 @@ class SharedMemory:
             self.variable_scores.clear()
             self.flip_history.clear()
             self.assignment_hint.clear()
-        print("🧹 Shared memory reset.")
+        print(" Shared memory reset.")
 
