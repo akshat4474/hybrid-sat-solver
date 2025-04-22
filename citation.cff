@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this solver in your research, please cite the following:"
+authors:
+  - family-names: Bisht
+    given-names: Akshat
+title: "Hybrid SAT Solver with Shared Clause Learning"
+version: 1.0.0
+date-released: 2024-05-01
+url: https://github.com/akshat4474/hybrid-sat-solver
+repository-code: https://github.com/akshat4474/hybrid-sat-solver
+license: Apache-2.0
