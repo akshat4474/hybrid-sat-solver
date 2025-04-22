@@ -53,7 +53,8 @@ python test.py --vars 30 40 --ratios 4.5 5.0 --repeats 3 --out data/generated/ve
 - `logs/cnf_metadata.csv` — clause/variable info and generation seeds
 
 ##  Citation
-If you use this project in academic research, please cite:
+This project is licensed under the Apache License 2.0.
+If you use this codebase or its outputs in an academic publication, please cite:
 
 ```
 @misc{bisht2024hybridsat,
