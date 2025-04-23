@@ -79,13 +79,11 @@ class SolverController:
         print(" Loaded variable scores:", len(self.shared_memory.get_variable_scores()))
         print(" Loaded assignment hints:", len(self.shared_memory.get_assignment_hints()))
 
-        if self.cdcl_enabled:
-            if self.run_cdcl():
-                return True
+        if self.cdcl_enabled and self.run_cdcl():
+            return True
 
-        if self.walksat_enabled:
-            if self.run_walksat():
-                return True
+        if self.walksat_enabled and self.run_walksat():
+            return True
 
         if self.brute_enabled:
             if self.debug:
@@ -97,6 +95,7 @@ class SolverController:
                 print(f" Brute Force is SKIPPED (variables = {len(self.variables)}, limit = {self.brute_scope_limit})")
 
         return False
+
 
     def log_result(self, solver_name: str, start_time: float, status: str):
         duration = time.time() - start_time
