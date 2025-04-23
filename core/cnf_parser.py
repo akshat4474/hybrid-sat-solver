@@ -1,12 +1,9 @@
-# cnf_parser.py
-
 from typing import List, Tuple
-
 
 def parse_cnf_file(filepath: str) -> Tuple[List[List[int]], List[int]]:
     """
     Parses a DIMACS CNF file and returns the clause list and variable list.
-    
+
     Returns:
         - clauses: List of clauses (each clause is a list of literals)
         - variables: List of unique variable numbers
@@ -18,20 +15,20 @@ def parse_cnf_file(filepath: str) -> Tuple[List[List[int]], List[int]]:
         for line in f:
             line = line.strip()
 
-            if line.startswith('c') or line == '':
-                continue  # Skip comments or empty lines
+            if not line or line.startswith(('c', 'p', '%')):
+                continue  # Skip comments, problem lines, end-of-input markers
 
-            if line.startswith('p'):
-                parts = line.split()
-                if len(parts) != 4 or parts[1] != "cnf":
-                    raise ValueError("Invalid problem line in CNF file.")
-                continue  # Skip the problem line
+            try:
+                tokens = list(map(int, line.split()))
+            except ValueError:
+                print(f"Skipping malformed line: {line}")
+                continue
 
-            # Parse clause
-            literals = list(map(int, line.split()))
-            if literals[-1] != 0:
-                raise ValueError(f"Clause line must end with 0. Got: {line}")
-            literals = literals[:-1]  # Remove trailing 0
+            if not tokens or tokens[-1] != 0:
+                print(f"Warning: clause does not end with 0 → {line}")
+                continue
+
+            literals = tokens[:-1]  # Remove trailing 0
 
             for lit in literals:
                 variables_set.add(abs(lit))
@@ -41,8 +38,7 @@ def parse_cnf_file(filepath: str) -> Tuple[List[List[int]], List[int]]:
     variables = sorted(list(variables_set))
     return clauses, variables
 
-
-# Optional: Add a quick CLI runner
+# Optional: CLI runner for quick tests
 if __name__ == "__main__":
     import sys
     if len(sys.argv) != 2:

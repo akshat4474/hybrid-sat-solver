@@ -1,5 +1,3 @@
-# walksat_solver.py
-
 import random
 from typing import List, Dict, Optional
 
@@ -12,13 +10,6 @@ class WalkSATSolver:
         p_random_flip: float = 0.5,
         shared_memory: Optional[dict] = None
     ):
-        """
-        clauses: List of 3-CNF clauses (e.g., [[1, -2, 3], [-1, 4, -5]])
-        variables: List of variable IDs (e.g., [1, 2, 3, 4, 5])
-        max_flips: Max number of flips to try before giving up
-        p_random_flip: Probability of flipping a random variable in unsat clause
-        shared_memory: Optional dict for clause feedback, variable heatmaps, etc.
-        """
         self.clauses = clauses
         self.variables = variables
         self.assignment: Dict[int, bool] = {}
@@ -37,7 +28,7 @@ class WalkSATSolver:
         )
 
     def get_unsatisfied_clauses(self) -> List[List[int]]:
-        return [clause for clause in self.clauses if not self.is_clause_satisfied(clause)]
+        return [clause for clause in self.clauses if clause and not self.is_clause_satisfied(clause)]
 
     def flip_variable(self, var: int):
         self.assignment[var] = not self.assignment[var]
@@ -46,6 +37,9 @@ class WalkSATSolver:
         """
         Heuristically select the variable in the clause whose flip satisfies most clauses.
         """
+        if not clause:
+            return random.choice(self.variables)  # fallback to avoid IndexError
+
         max_satisfied = -1
         best_var = abs(clause[0])
         for lit in clause:
@@ -67,6 +61,9 @@ class WalkSATSolver:
                 return True  # All clauses satisfied
 
             clause = random.choice(unsat_clauses)
+
+            if not clause:
+                continue  # skip empty clause if any slip through
 
             if random.random() < self.p_random_flip:
                 var_to_flip = abs(random.choice(clause))

@@ -6,7 +6,7 @@ from core.controller import SolverController
 from logger import log_cnf_metadata
 
 
-def run_solver(cnf_path: str, brute_scope_limit: int = 10):
+def run_solver(cnf_path: str, brute_scope_limit: int = 14):
     if not os.path.exists(cnf_path):
         print(f"File not found: {cnf_path}")
         return
